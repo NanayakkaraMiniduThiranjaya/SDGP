@@ -18,8 +18,7 @@ export default function Navbar() {
             <a href="/" className="text-gray-700 hover:text-gray-900">Home</a>
             <a href="/map" className="text-gray-700 hover:text-gray-900">Map</a>
             <a href="/minebot" className="text-gray-700 hover:text-gray-900">Minebot</a>
-            <a href="/royalty" className="text-gray-700 hover:text-gray-900">Royalty</a>
-            <a href="/complains" className="text-gray-700 hover:text-gray-900">Complains</a>
+            <a href="/complain" className="text-gray-700 hover:text-gray-900">Complain</a>
             <a href="/license-portal" className="text-gray-700 hover:text-gray-900">License Portal</a>
             <a href="/minemore" className="text-gray-700 hover:text-gray-900">Minemore</a>
             <a href="/about" className="text-gray-700 hover:text-gray-900">About Us</a>
