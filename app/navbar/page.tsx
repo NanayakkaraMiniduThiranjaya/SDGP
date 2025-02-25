@@ -3,11 +3,25 @@ import { AppBar, Toolbar, IconButton } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  // Add scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 20
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [scrolled])
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -43,7 +57,8 @@ export default function Navbar() {
       initial="hidden"
       animate="show"
       variants={navAnimation}
-      className="bg-white shadow-lg"
+      className={`${scrolled ? 'bg-[#0A192F] shadow-lg' : 'bg-transparent'} 
+        fixed w-full z-50 transition-all duration-300`}
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
@@ -77,7 +92,11 @@ export default function Navbar() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link href={item.path}>
-                  <span className="px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-all duration-200">
+                  <span className="px-3 py-2 text-[#E6F1FF] hover:text-[#FFA500] 
+                    hover:bg-[rgba(255,165,0,0.1)] rounded-md transition-all duration-200
+                    relative after:content-[''] after:absolute after:bottom-0 after:left-0 
+                    after:w-0 after:h-[2px] after:bg-[#FFA500] after:transition-all 
+                    after:duration-300 hover:after:w-full">
                     {item.name}
                   </span>
                 </Link>
@@ -94,7 +113,9 @@ export default function Navbar() {
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 cursor-pointer"
+                className="bg-[#FFA500] text-[#0A192F] px-4 py-2 rounded-lg 
+                  hover:bg-[#FFD700] transition-colors duration-200 cursor-pointer
+                  font-semibold"
               >
                 Sign Up
               </motion.span>
@@ -105,7 +126,7 @@ export default function Navbar() {
           <div className="md:hidden">
             <IconButton
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-800 hover:bg-gray-100 p-2 rounded-md"
+              className="text-[#FFA500] hover:bg-[rgba(255,165,0,0.1)] p-2 rounded-md"
             >
               <MenuIcon />
             </IconButton>
@@ -116,7 +137,8 @@ export default function Navbar() {
         <motion.div
           initial={false}
           animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out`}
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out
+            bg-[#112240] rounded-b-lg`}
         >
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navItems.map((item) => (
@@ -126,7 +148,8 @@ export default function Navbar() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link href={item.path}>
-                  <span className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-all duration-200">
+                  <span className="block px-3 py-2 text-[#E6F1FF] hover:text-[#FFA500] 
+                    hover:bg-[rgba(255,165,0,0.1)] rounded-md transition-all duration-200">
                     {item.name}
                   </span>
                 </Link>
@@ -138,7 +161,9 @@ export default function Navbar() {
               className="mt-4"
             >
               <Link href="/signup">
-                <span className="block w-full text-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
+                <span className="block w-full text-center bg-[#FFA500] text-[#0A192F] 
+                  px-4 py-2 rounded-lg hover:bg-[#FFD700] transition-colors duration-200
+                  font-semibold">
                   Sign Up
                 </span>
               </Link>

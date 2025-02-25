@@ -154,15 +154,27 @@ export default function TypeALicense() {
     }
   };
 
-  const handleFileChange = (section: string, field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (section: keyof FormData | '', field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData(prev => ({
-        ...prev,
-        [section]: {
-          ...prev[section],
+      if (section === '') {
+        // Handle root level file fields
+        setFormData(prev => ({
+          ...prev,
           [field]: e.target.files![0]
-        }
-      }));
+        }));
+      } else {
+        // Handle nested file fields
+        setFormData(prev => {
+          const sectionData = prev[section] as Record<string, any>;
+          return {
+            ...prev,
+            [section]: {
+              ...sectionData,
+              [field]: e.target.files![0]
+            }
+          };
+        });
+      }
     }
   };
 
